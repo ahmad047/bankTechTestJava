@@ -10,4 +10,13 @@ public class BankAccountTest {
         subject.deposit(500);
         assertEquals(500.00, subject.getBalance());
     }
+
+    @Test
+    void withdrawFunds(){
+        BankAccount subject = new BankAccount();
+
+        subject.deposit(500);
+        subject.withdraw(200);
+        assertEquals(300.00, subject.getBalance());
+    }
 }

@@ -5,6 +5,10 @@ public class BankAccount {
         balance += amount;
     }
 
+    public void withdraw(float amount) {
+        balance -= amount;
+    }
+
     public float getBalance () {
         return balance;
     }
