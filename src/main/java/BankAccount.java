@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class BankAccount {
     private float balance;
@@ -32,5 +33,16 @@ public class BankAccount {
 
     public ArrayList<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public String generateStatement() {
+        ArrayList<Transaction> transactionsToPrint = transactions;
+        Collections.reverse(transactionsToPrint);
+        String header = "date || credit || debit || balance\n";
+        String statement = header;
+        for (int i = 0; i < transactionsToPrint.size(); i++) {
+            statement += transactionsToPrint.get(i).getDate().toString() + " || " + String.format("%.2f", transactions.get(i).getCredit()) + " || " + String.format("%.2f", transactions.get(i).getDebit()) + " || " + String.format("%.2f", transactions.get(i).getBalance()) + "\n";
+        }
+        return statement.replaceAll(" 0\\.00 ", " - ");
     }
 }
