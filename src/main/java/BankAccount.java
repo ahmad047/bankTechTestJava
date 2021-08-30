@@ -6,7 +6,10 @@ public class BankAccount {
 
     private ArrayList<Transaction> transactions = new ArrayList();
 
-    public void deposit(float amount, LocalDate date) {
+    public void deposit(float amount, LocalDate date) throws BankAccountException{
+        if (amount <= 0){
+            throw new BankAccountException("Invalid deposit");
+        }
         balance += amount;
         Transaction transaction = new Transaction(amount, 0, balance, date);
         this.transactions.add(transaction);

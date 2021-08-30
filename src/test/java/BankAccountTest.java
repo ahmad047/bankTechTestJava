@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BankAccountTest {
     BankAccount subject;
     @BeforeEach
-    void createBankAccount(){
+    void createBankAccount() throws BankAccountException {
         subject = new BankAccount();
         subject.deposit(500, LocalDate.of(2021, 8, 1));
     }
@@ -49,5 +49,13 @@ public class BankAccountTest {
         assertEquals("Insufficient balance", exception.getMessage());
     }
 
+    @Test
+    void raiseExceptionForNegativeDeposit() throws BankAccountException{
+        Exception exception = assertThrows(BankAccountException.class, () -> {
+            subject.deposit(-50, LocalDate.of(2021, 8, 11));
+        });
+
+        assertEquals(exception.getMessage(), "Invalid deposit");
+    }
 
 }
