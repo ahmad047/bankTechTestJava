@@ -58,4 +58,13 @@ public class BankAccountTest {
         assertEquals(exception.getMessage(), "Invalid deposit");
     }
 
+    @Test
+    void raiseExceptionForNegativeWithdrawal() throws BankAccountException{
+        Exception exception = assertThrows(BankAccountException.class, () -> {
+            subject.withdraw(-50, LocalDate.of(2021, 8, 11));
+        });
+
+        assertEquals(exception.getMessage(), "Invalid withdrawal");
+    }
+
 }
