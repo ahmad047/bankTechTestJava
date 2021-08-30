@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BankAccountTest {
     BankAccount subject;
@@ -21,22 +22,32 @@ public class BankAccountTest {
 
     @Test
     @DisplayName("Test can reduce the balance on withdrawal")
-    void withdrawFunds(){
+    void withdrawFunds() throws BankAccountException {
         subject.withdraw(200, LocalDate.of(2021, 8, 1));
         assertEquals(300.00, subject.getBalance());
     }
 
     @Test
     @DisplayName("Test can create a transaction object on deposit")
-    void savesObjectOnDesposit(){
+    void savesObjectOnDeposit(){
         assertEquals(500, subject.getTransactions().get(0).getCredit());
     }
 
     @Test
     @DisplayName("Test can create a transaction object on withdrawal")
-    void savesObjectOnWithdrawal(){
+    void savesObjectOnWithdrawal() throws BankAccountException{
         subject.withdraw(100, LocalDate.of(2021, 8, 1));
         assertEquals(100, subject.getTransactions().get(1).getDebit());
 
     }
+
+    @Test
+    @DisplayName("Test should throw an error for insufficient balance")
+    void raiseExceptionForInsufficientBalance() {
+        Exception exception = assertThrows(BankAccountException.class, () ->
+                subject.withdraw(600, LocalDate.of(21, 8, 1)));
+        assertEquals("Insufficient balance", exception.getMessage());
+    }
+
+
 }
